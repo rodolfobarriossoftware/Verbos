@@ -1,4 +1,4 @@
-const verbos = [
+const words = [
 
   // Present = Past = Past Participle
   { esp: "apostar", past: "bet" },
@@ -93,13 +93,13 @@ const verbos = [
   { esp: "ser/estar", past: "was/were" }
 ];
 
-let verbosPendientes = [...verbos];
-let verbosAciertos = [];
+let wordsPendientes = [...words];
+let wordsAciertos = [];
 let actual;
 
 function siguiente() {
 
-  if (verbosPendientes.length === 0) {
+  if (wordsPendientes.length === 0) {
     document.getElementById("verbo").innerText = "🎉 ¡Completado!";
     actual = null;
     return;
@@ -109,7 +109,7 @@ function siguiente() {
   document.getElementById("respuesta").value = "";
 
   
-  actual = verbosPendientes[0];
+  actual = wordsPendientes[0];
 
   document.getElementById("verbo").innerText = actual.esp;
 }
@@ -125,16 +125,16 @@ function verificar() {
   const opciones = actual.past.split("/");
 
   // sacar de la cola (siempre está al frente)
-  verbosPendientes.shift();
+  wordsPendientes.shift();
 
   if (opciones.includes(r)) {
 
     document.getElementById("resultado").innerText =
-      "✅ Correcto — pasa a dominados";
+      "Correcto — pasa a dominados";
 
     hablar(r);
 
-    verbosAciertos.push(actual);
+    wordsAciertos.push(actual);
     actualizarLista();
 
   } else {
@@ -145,7 +145,7 @@ function verificar() {
     hablar(opciones[0]);
 
     // 👇 mandar al final de la cola
-    verbosPendientes.push(actual);
+    wordsPendientes.push(actual);
   }
 
   siguiente();
@@ -155,7 +155,7 @@ function actualizarLista() {
   const ul = document.getElementById("listaAciertos");
   ul.innerHTML = "";
 
-  verbosAciertos.forEach(v => {
+  wordsAciertos.forEach(v => {
     const li = document.createElement("li");
     li.textContent = v.esp + " → " + v.past;
     ul.appendChild(li);
@@ -163,8 +163,8 @@ function actualizarLista() {
 }
 
 function reiniciar() {
-  verbosPendientes = [...verbos];
-  verbosAciertos = [];
+  wordsPendientes = [...words];
+  wordsAciertos = [];
   actualizarLista();
   siguiente();
 }

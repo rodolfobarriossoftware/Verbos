@@ -83,7 +83,7 @@ function verificar() {
     document.getElementById("resultado").innerText =
       "✅ Correcto — pasa a dominados";
 
-    hablar(actual.eng);
+    //hablar(actual.eng);
 
     aciertos.push(actual);
     actualizarLista();
@@ -93,7 +93,7 @@ function verificar() {
     document.getElementById("resultado").innerText =
       "❌ Era: " + actual.eng + " — vuelve al inicio";
 
-    hablar(actual.eng);
+    //hablar(actual.eng);
     reiniciar();
   }
 
