@@ -1,17 +1,26 @@
-const words = [
 
-  { esp: "apostar", eng: "bet" },
-  
+const words = [
+  { esp: "provechosa/o", eng: "rewarding" },
+  { esp: "pero puede", eng: "but it can" },
+  { esp: "malentendidos", eng: "misunderstandings" },
+  { esp: "puede", eng: "may" },
+  { esp: "mientras", eng: "while" },
+  { esp: "enfoque", eng: "approach" },
+  { esp: "jerarquía", eng: "hierarchy" },
+  { esp: "gesto", eng: "gesture" },
+  { esp: "para evitar", eng: "to avoid" },
+  { esp: "su", eng: "their" },
+  { esp: "de mente abierta", eng: "open-minded" },
+  { esp: "construir", eng: "build" },
 ];
 
 let wordsPendientes = [...words];
-let WordsAciertos = [];
+let wordsAciertos = [];
 let actual;
 
 function siguiente() {
-
   if (wordsPendientes.length === 0) {
-    document.getElementById("Word").innerText = "¡Completado!";
+    document.getElementById("verbo").innerText = "¡Completado!";
     actual = null;
     return;
   }
@@ -19,12 +28,10 @@ function siguiente() {
   document.getElementById("resultado").innerText = "";
   document.getElementById("respuesta").value = "";
 
-  
   actual = wordsPendientes[0];
 
   document.getElementById("verbo").innerText = actual.esp;
 }
-
 
 function verificar() {
   if (!actual) return;
@@ -33,27 +40,26 @@ function verificar() {
     .toLowerCase()
     .trim();
 
-  const opciones = actual.past.split("/");
+  if (r === "") return;
 
-  // sacar de la cola (siempre está al frente)
+  const opciones = actual.eng.split("/");
+
+  // Sacar la palabra del frente de la cola
   wordsPendientes.shift();
 
   if (opciones.includes(r)) {
-
     document.getElementById("resultado").innerText =
-      "Correcto — pasa a dominados";
+      "Correcto — pasa a dominadas";
 
     wordsAciertos.push(actual);
     actualizarLista();
-
   } else {
-
     document.getElementById("resultado").innerText =
-      "Era: " + actual.past + " — vuelve al final";
+      "Era: " + actual.eng + " — vuelve al final";
 
     hablar(opciones[0]);
 
-    // mandar al final de la cola
+    // Mandar la palabra al final de la cola
     wordsPendientes.push(actual);
   }
 
@@ -84,4 +90,3 @@ document.getElementById("respuesta")
   });
 
 siguiente();
-
