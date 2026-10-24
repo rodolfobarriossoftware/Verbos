@@ -1,18 +1,58 @@
-
 const words = [
-  { esp: "provechosa/o", eng: "rewarding" },
-  { esp: "pero puede", eng: "but it can" },
-  { esp: "malentendidos", eng: "misunderstandings" },
+  // Prioridad alta: palabras y expresiones de uso frecuente
   { esp: "puede", eng: "may" },
+  { esp: "podría", eng: "might" },
   { esp: "mientras", eng: "while" },
-  { esp: "enfoque", eng: "approach" },
-  { esp: "jerarquía", eng: "hierarchy" },
-  { esp: "gesto", eng: "gesture" },
-  { esp: "para evitar", eng: "to avoid" },
-  { esp: "su", eng: "their" },
-  { esp: "de mente abierta", eng: "open-minded" },
+  { esp: "sin", eng: "without" },
+  { esp: "significar", eng: "mean" },
   { esp: "construir", eng: "build" },
+  { esp: "cambiar", eng: "to change" },
+  { esp: "comportamiento", eng: "behavior" },
+  { esp: "tienden a", eng: "tend to" },
+  { esp: "a pesar de que", eng: "although" },
+  { esp: "para evitar", eng: "to avoid" },
+  { esp: "pero puede", eng: "but it can" },
+  { esp: "junto a cada uno", eng: "next to each" },
+  { esp: "cuál", eng: "which" },
+  { esp: "su (de ellos/ellas)", eng: "their" },
+
+  // Prioridad media: comunicación y trabajo
+  { esp: "comunicación", eng: "communication" },
+  { esp: "estilos", eng: "styles" },
+  { esp: "enfoque", eng: "approach" },
+  { esp: "aclarar", eng: "clarify" },
+  { esp: "adaptar", eng: "adapt" },
+  { esp: "respeto", eng: "respect" },
+  { esp: "colegas", eng: "colleagues" },
+  { esp: "directamente", eng: "directly" },
+  { esp: "indirecto/a", eng: "indirect" },
+  { esp: "educado/a; cortés", eng: "polite" },
+  { esp: "desacuerdo", eng: "disagreement" },
+  { esp: "suposiciones", eng: "assumptions" },
+  { esp: "malentendidos", eng: "misunderstandings" },
+  { esp: "provechoso/a; gratificante", eng: "rewarding" },
+
+  // Prioridad específica: cultura y comunicación
+  { esp: "jerarquía", eng: "hierarchy" },
+  { esp: "expectativas culturales", eng: "cultural expectations" },
+  { esp: "lenguaje corporal", eng: "body language" },
+  { esp: "gesto", eng: "gesture" },
+  { esp: "puntualidad", eng: "punctuality" },
+  { esp: "creencias", eng: "beliefs" },
+  { esp: "comportarse", eng: "behave" },
+  { esp: "tiempo previsto", eng: "expected time" },
+  { esp: "mente abierta", eng: "open-minded" },
+
+  // Expresiones completas: aprende los bloques
+  { esp: "la forma en que un/a...", eng: "the way a" },
+  { esp: "explicar", eng: "to explain" },
+  { esp: "para dejarlo claro", eng: "to make it clear" },
+  { esp: "de una manera que...", eng: "in a way that..." },
+  { esp: "de una manera...", eng: "in a _ way" },
+  { esp: "para; con el fin de", eng: "in order to" },
+  { esp: "indirectamente; sin expresarlo claramente", eng: "indirectly" },
 ];
+
 
 let wordsPendientes = [...words];
 let wordsAciertos = [];
@@ -44,26 +84,30 @@ function verificar() {
 
   const opciones = actual.eng.split("/");
 
-  // Sacar la palabra del frente de la cola
-  wordsPendientes.shift();
-
   if (opciones.includes(r)) {
+    // Respuesta correcta
     document.getElementById("resultado").innerText =
-      "Correcto — pasa a dominadas";
+      "¡Correcto! — pasa a dominadas";
 
     wordsAciertos.push(actual);
+    wordsPendientes.shift();
     actualizarLista();
+
+    siguiente();
+
   } else {
+    // Respuesta incorrecta: mostrar la forma correcta
     document.getElementById("resultado").innerText =
-      "Era: " + actual.eng + " — vuelve al final";
+      "Incorrecto. Se escribe: " + actual.eng +
+      ". El juego se reiniciará.";
 
-    hablar(opciones[0]);
+    hablar(actual.eng);
 
-    // Mandar la palabra al final de la cola
-    wordsPendientes.push(actual);
+    // Esperar 2 segundos para que puedas leer la respuesta
+    setTimeout(() => {
+      reiniciar();
+    }, 2000);
   }
-
-  siguiente();
 }
 
 function actualizarLista() {
